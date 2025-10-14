@@ -3,6 +3,12 @@
 NexGenTutor is an enhanced multimodal video-generation pipeline with a polished Streamlit UI, richer model-selection and configuration controls, scene-level preview and playback logic, improved error handling and compatibility shims, developer-friendly run/debug tooling, and usability improvements for creating STEM explanatory videos (math, physics, chemistry, CS, etc.). It streamlines interactive workflows — from planning and RAG-enabled generation to rendering and evaluation — and packages core capabilities for easier local use and rapid iteration.
 <img width="1919" height="1050" alt="image" src="https://github.com/user-attachments/assets/c0a9c1dd-5188-4fb7-857e-adaca8e17d3c" />
 
+
+
+https://github.com/user-attachments/assets/1b035047-8015-4147-87f9-61e6c5e50b24
+
+
+
 Key features:
 - Select dataset theorems or provide a custom topic + description.
 - Choose Main and Helper LLM models (populated from `src/utils/allowed_models.json` or custom string).
@@ -96,7 +102,6 @@ The model naming follows the LiteLLM convention. For details on how models shoul
 ## NextGenTutor frontend — full integration notes
 
 This section documents the NextGenTutor Streamlit frontend integration and how to use it alongside the TEA backend. The file `app_streamlit.py` included in this repository contains the complete UI integration. 
-<img width="1919" height="1050" alt="image" src="https://github.com/user-attachments/assets/c0a9c1dd-5188-4fb7-857e-adaca8e17d3c" />
 Key implementation notes:
 
 - The Streamlit app loads allowed models from `src/utils/allowed_models.json` if present and populates Main and Helper model selectors in the sidebar. A custom model override is also supported.
