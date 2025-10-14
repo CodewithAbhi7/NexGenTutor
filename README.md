@@ -1,11 +1,7 @@
 # NexGenTutor
 
 NexGenTutor is an enhanced multimodal video-generation pipeline with a polished Streamlit UI, richer model-selection and configuration controls, scene-level preview and playback logic, improved error handling and compatibility shims, developer-friendly run/debug tooling, and usability improvements for creating STEM explanatory videos (math, physics, chemistry, CS, etc.). It streamlines interactive workflows — from planning and RAG-enabled generation to rendering and evaluation — and packages core capabilities for easier local use and rapid iteration.
-
-
-https://github.com/user-attachments/assets/70661bd2-1ebf-4376-911b-f8b73ea498b8
-
-
+<img width="1919" height="1050" alt="image" src="https://github.com/user-attachments/assets/c0a9c1dd-5188-4fb7-857e-adaca8e17d3c" />
 
 Key features:
 - Select dataset theorems or provide a custom topic + description.
@@ -87,7 +83,7 @@ Fill in the API keys according to the model you wanted to use.
 export PYTHONPATH=$(pwd):$PYTHONPATH
 ```
 
-6. (Optional) To setup RAG, See [https://github.com/TIGER-AI-Lab/TheoremExplainAgent?tab=readme-ov-file#generation-with-rag](https://github.com/TIGER-AI-Lab/TheoremExplainAgent?tab=readme-ov-file#generation-with-rag).
+6. (Optional) To setup RAG, See [https://github.com/CodewithAbhi7/NexGenTutor?tab=readme-ov-file#generation-with-rag](https://github.com/CodewithAbhi7/NexGenTutor?tab=readme-ov-file#generation-with-rag).
 
 > **Look at the [FAQ section in this README doc](https://github.com/TIGER-AI-Lab/TheoremExplainAgent?tab=readme-ov-file#-faq) if you encountered any errors. If that didnt help, create a issue**<br>
 
