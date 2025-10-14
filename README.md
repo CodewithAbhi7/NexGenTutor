@@ -1,34 +1,15 @@
-# TheoremExplainAgent (TEA) 🍵
-[![arXiv](https://img.shields.io/badge/arXiv-2502.19400-b31b1b.svg)](https://arxiv.org/abs/2502.19400)
-<a href='https://huggingface.co/papers/2502.19400'><img src='https://img.shields.io/static/v1?label=Paper&message=Huggingface&color=orange'></a> 
+````markdown
+# NexGenTutor
 
-[**🌐 Homepage**](https://tiger-ai-lab.github.io/TheoremExplainAgent/)  | [**📖 arXiv**](https://arxiv.org/abs/2502.19400) | [**🤗 HuggingFace Dataset**](https://huggingface.co/datasets/TIGER-Lab/TheoremExplainBench) | [🎥Video Data](https://drive.google.com/file/d/18kmzXvbxaFGyJw-g51jnq9m93v_ez4aJ/view) | [**▶️ YouTube**](https://youtu.be/0G9YO637IVE)
+NexGenTutor is an enhanced multimodal video-generation pipeline with a polished Streamlit UI, richer model-selection and configuration controls, scene-level preview and playback logic, improved error handling and compatibility shims, developer-friendly run/debug tooling, and usability improvements for creating STEM explanatory videos (math, physics, chemistry, CS, etc.). It streamlines interactive workflows — from planning and RAG-enabled generation to rendering and evaluation — and packages core capabilities for easier local use and rapid iteration.
+[🎥Video Data](https://drive.google.com/drive/folders/10pMljDadLjupqB3hUdzqZ28hwY7hVTBt?usp=drive_link) |
 
-[![contributors](https://img.shields.io/github/contributors/TIGER-AI-Lab/TheoremExplainAgent)](https://github.com/TIGER-AI-Lab/TheoremExplainAgent/graphs/contributors)
-[![license](https://img.shields.io/github/license/TIGER-AI-Lab/TheoremExplainAgent.svg)](https://github.com/TIGER-AI-Lab/TheoremExplainAgent/blob/main/LICENSE)
-[![GitHub](https://img.shields.io/github/stars/TIGER-AI-Lab/TheoremExplainAgent?style=social)](https://github.com/TIGER-AI-Lab/TheoremExplainAgent)
-![Hits](https://visitor-badge.laobi.icu/badge?page_id=TIGER-AI-Lab.TheoremExplainAgent)
-
-
-This repo contains the codebase for our paper [TheoremExplainAgent: Towards Video-based Multimodal Explanations for LLM Theorem Understanding](https://arxiv.org/abs/2502.19400)
-
-**ACL 2025 main** (Oral)
-
-## Introduction
-TheoremExplainAgent is an AI system that generates long-form Manim videos to visually explain theorems, proving its deep understanding while uncovering reasoning flaws that text alone often hides.
-
-
-
-https://github.com/user-attachments/assets/17f2f4f2-8f2c-4abc-b377-ac92ebda69f3
-
-
-## 📰 News
-* 2025 Jun 24: Paper got selected for Oral presentation (Top 3%).
-* 2025 Jun 8: We released our generated video data for researchers to serve as baselines.
-* 2025 May 15: Paper accepted to ACL 2025 main conference.
-* 2025 Mar 3: Generation code and Evaluation code released. Thanks for the wait!
-<!--* 2025 Mar 3: Reach 404 stars without code.-->
-* 2025 Feb 27: Paper available on [Arxiv](https://arxiv.org/abs/2502.19400). Thanks AK for putting our paper on [HF Daily](https://huggingface.co/papers/2502.19400).
+Key features:
+- Select dataset theorems or provide a custom topic + description.
+- Choose Main and Helper LLM models (populated from `src/utils/allowed_models.json` or custom string).
+- Start the full generation pipeline (planning + rendering) from the UI.
+- Preview combined topic video if present; otherwise preview main scene files only (scene1.mp4, scene2.mp4, ...).
+- The UI injects a small compatibility shim (a CLI-like `args` namespace) when running the generator so no changes to `src/` are necessary.
 
 ## Downloading Generated Video Data
 Skip this section if you just want to try out the code.
@@ -39,7 +20,7 @@ wget --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certifica
 
 ## Installation
 
-> **Look at the [FAQ section in this README doc](https://github.com/TIGER-AI-Lab/TheoremExplainAgent?tab=readme-ov-file#-faq) if you encountered any errors. If that didnt help, create a issue**<br>
+> **Look at the [FAQ section in this README doc](https://github.com/CodewithAbhi7/NexGenTutor?tab=readme-ov-file#-faq) if you encountered any errors. If that didnt help, create a issue**<br>
 
 1. Setting up conda environment
 ```shell
@@ -113,7 +94,26 @@ export PYTHONPATH=$(pwd):$PYTHONPATH
 <!--You can customize the allowed models by editing the `src/utils/allowed_models.json` file. This file specifies which `model` and `helper_model` the system is permitted to use.--> 
 The model naming follows the LiteLLM convention. For details on how models should be named, please refer to the [LiteLLM documentation](https://docs.litellm.ai/docs/providers).
 
-### Generation (Single topic)
+## NextGenTutor frontend — full integration notes
+
+This section documents the NextGenTutor Streamlit frontend integration and how to use it alongside the TEA backend. The file `app_streamlit.py` included in this repository contains the complete UI integration. 
+<img width="1919" height="1050" alt="image" src="https://github.com/user-attachments/assets/c0a9c1dd-5188-4fb7-857e-adaca8e17d3c" />
+Key implementation notes:
+
+- The Streamlit app loads allowed models from `src/utils/allowed_models.json` if present and populates Main and Helper model selectors in the sidebar. A custom model override is also supported.
+- When triggering generation from the UI the app instantiates `VideoGenerator` with `LiteLLMWrapper` instances for planner/helper models and calls `generate_video_pipeline(...)` and `combine_videos(...)` where appropriate.
+- The UI displays combined topic video if `<topic>_combined.mp4` exists; if not it searches for main scene MP4 files matching patterns like `scene1.mp4`, `scene_1.mp4`, or `<topic>_scene1.mp4` and displays those. Small partial clips are ignored.
+
+### Run via frontend or CLI
+
+NexGenTutor includes a Streamlit frontend that exposes almost all generation workflows — planning, RAG-enabled generation, rendering, and scene/video preview — so you can run and monitor experiments from your browser. Note: the frontend does not currently include the evaluation sub-workflow; use the CLI for evaluation or other advanced batch operations.
+
+- To use the frontend (recommended for interactive testing and preview):
+```powershell
+python -m streamlit run app_streamlit.py --server.port 8501
+```
+- To run generation directly from the terminal (CLI examples):
+Single-topic generation:
 ```shell
 python generate_video.py \
       --model "openai/o3-mini" \
@@ -278,31 +278,11 @@ python parse_prompt.py
 cd ..
 ```
 
-## TheoremExplainBench (TEB)
-
-TheoremExplainBench can be found on https://huggingface.co/datasets/TIGER-Lab/TheoremExplainBench.
-
-How to use:
-```python
-import datasets
-dataset = datasets.load_dataset("TIGER-Lab/TheoremExplainBench")
-```
-
-Dataset info:
-```shell
-DatasetDict({
-    train: Dataset({
-        features: ['uid', 'subject', 'difficulty', 'theorem', 'description', 'subfield'],
-        num_rows: 240
-    })
-})
-```
-
 ## ❓ FAQ
 
 The FAQ should cover the most common errors you could encounter. If you see something new, report it on issues.
 
-Q: Error `src.utils.kokoro_voiceover import KokoroService  # You MUST import like this as this is our custom voiceover service. ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ ModuleNotFoundError: No module named 'src'`. <br>
+Q: Error `src.utils.kokoro_voiceover import KokoroService  # You MUST import like this as this is our custom voiceover service. ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ ModuleNotFoundError: No module named 'src'`. <br>
 A: Please run `export PYTHONPATH=$(pwd):$PYTHONPATH` when you start a new terminal. <br>
 
 Q: Error `Files not found` <br>
@@ -317,35 +297,12 @@ A: It could be API-related issues. Make sure your `.env` file is properly config
 Q: Plans / Scenes are missing? <br>
 A: It could be API-related issues. Make sure your `.env` file is properly configured (fill in your API keys), or you can enable litellm debug mode to figure out the issues. <br>
 
+## Acknowledgements
+ Big thanks to the [TheoremExplainAgent] team for the core pipeline and research — for more information visit their repository and paper.
 
-## 🖊️ Citation
+For full details and the original project, see: https://github.com/TIGER-AI-Lab/TheoremExplainAgent
 
-Please kindly cite our paper if you use our code, data, models or results:
-```bibtex
-@misc{ku2025theoremexplainagentmultimodalexplanationsllm,
-      title={TheoremExplainAgent: Towards Multimodal Explanations for LLM Theorem Understanding}, 
-      author={Max Ku and Thomas Chong and Jonathan Leung and Krish Shah and Alvin Yu and Wenhu Chen},
-      year={2025},
-      eprint={2502.19400},
-      archivePrefix={arXiv},
-      primaryClass={cs.AI},
-      url={https://arxiv.org/abs/2502.19400}, 
-}
-```
-
-## 🎫 License
-
-This project is released under the [the MIT License](LICENSE).
-
-## ⭐ Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=TIGER-AI-Lab/TheoremExplainAgent&type=Date)](https://star-history.com/#TIGER-AI-Lab/TheoremExplainAgent&Date)
-
-## 💞 Acknowledgements
-
-We want to thank [Votee AI](https://votee.ai/) for sponsoring API keys to access the close-sourced models.
-
-The code is built upon the below repositories, we thank all the contributors for open-sourcing.
+Also Thanks to
 * [Manim Community](https://www.manim.community/)
 * [kokoro-manim-voiceover](https://github.com/xposed73/kokoro-manim-voiceover)
 * [manim-physics](https://github.com/Matheart/manim-physics)
@@ -354,8 +311,13 @@ The code is built upon the below repositories, we thank all the contributors for
 * [manim-dsa](https://github.com/F4bbi/manim-dsa)
 * [manim-circuit](https://github.com/Mr-FuzzyPenguin/manim-circuit)
 
+## 🎫 License
+
+This project is released under the [the MIT License](LICENSE).
+
 ## 🚨 Disclaimer
 
 **This work is intended for research purposes only. The authors do not encourage or endorse the use of this codebase for commercial applications. The code is provided "as is" without any warranties, and users assume all responsibility for its use.**
 
-Tested Environment: MacOS, Linux
+
+````
