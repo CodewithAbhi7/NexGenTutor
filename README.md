@@ -301,7 +301,7 @@ Q: Plans / Scenes are missing? <br>
 A: It could be API-related issues. Make sure your `.env` file is properly configured (fill in your API keys), or you can enable litellm debug mode to figure out the issues. <br>
 
 ## Acknowledgements
- Big thanks to the [TheoremExplainAgent] team for the core pipeline and research — for more information visit their repository and paper.
+ Big thanks to the [TheoremExplainAgent](https://github.com/TIGER-AI-Lab/TheoremExplainAgent) team for the core pipeline and research — for more information visit their repository and paper.
 
 For full details and the original project, see: https://github.com/TIGER-AI-Lab/TheoremExplainAgent
 
