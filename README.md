@@ -10,6 +10,7 @@ NexGenTutor is an enhanced multimodal video-generation pipeline with a polished 
 
 https://github.com/user-attachments/assets/1b035047-8015-4147-87f9-61e6c5e50b24
 
+<img width="1600" height="848" alt="image" src="https://github.com/user-attachments/assets/87ac84b7-a78a-43df-8090-aa0dbd3d64ed" />
 
 
 Key features:
