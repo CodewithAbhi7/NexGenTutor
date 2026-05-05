@@ -1,6 +1,10 @@
 # NexGenTutor
 
-NexGenTutor is an enhanced multimodal video-generation pipeline with a polished Streamlit UI, richer model-selection and configuration controls, scene-level preview and playback logic, improved error handling and compatibility shims, developer-friendly run/debug tooling, and usability improvements for creating STEM explanatory videos (math, physics, chemistry, CS, etc.). It streamlines interactive workflows — from planning and RAG-enabled generation to rendering and evaluation — and packages core capabilities for easier local use and rapid iteration.
+NexGenTutor is a multi-agent AI system that autonomously generates STEM(Maths, Physics, Chem,CS,etc) educational videos from a given topic.
+
+It combines LLM orchestration, Retrieval-Augmented Generation (RAG), and Manim-based programmatic animation to produce structured, scene-by-scene explanatory videos with synchronized voiceovers. The system is wrapped in an interactive Streamlit interface that enables topic selection, model configuration, and real-time preview of generated scenes and final outputs.
+
+The pipeline is designed for robustness and experimentation, featuring automatic retry mechanisms (up to 4 attempts per failed generation step), graceful fallback handling and modular components for rapid iteration and debugging.
 
 [![Watch the video](https://github.com/user-attachments/assets/d6a7d4fe-c9d9-4ef6-810e-19b3e0c5c9af)](https://www.youtube.com/watch?v=X31EXpIg7A0)
 
@@ -14,11 +18,17 @@ https://github.com/user-attachments/assets/1b035047-8015-4147-87f9-61e6c5e50b24
 
 
 Key features:
-- Select dataset theorems or provide a custom topic + description.
-- Choose Main and Helper LLM models (populated from `src/utils/allowed_models.json` or custom string).
-- Start the full generation pipeline (planning + rendering) from the UI.
+- Generate STEM videos from custom topics or curated datasets
+- Multi-agent pipeline with LLM orchestration (planner + helper models)
+- RAG integration for context-aware and accurate explanations
+- Manim-based scene generation with automatic video composition
+- Multimodal TTS for synchronized narration
+- Interactive Streamlit UI with model selection, controls, and scene previews
+- Built-in retry mechanism (up to 4 attempts) with failure handling for robust generation
 - Preview combined topic video if present; otherwise preview main scene files only (scene1.mp4, scene2.mp4, ...).
-- The UI injects a small compatibility shim (a CLI-like `args` namespace) when running the generator so no changes to `src/` are necessary.
+- Start the full generation pipeline (planning + rendering) from the UI.
+- Modular and configurable architecture for experimentation and scaling
+
 
 ## Downloading Generated Video Data
 Skip this section if you just want to try out the code.
